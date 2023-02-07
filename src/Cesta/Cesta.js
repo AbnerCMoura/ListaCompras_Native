@@ -1,31 +1,31 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import { ScrollView, StyleSheet, View} from 'react-native';
+import { useFonts , Montserrat_400Regular, Montserrat_700Bold} from '@expo-google-fonts/montserrat';
 import Header from '../Cesta/componentes/Header';
 import Detalhes from '../Cesta/componentes/Detalhes';
+import Itens from './componentes/Itens'
 
-
-
-
-export default function Cesta(){
-    const [fontsLoaded] = useFonts({
-        "MontserratRegular": Montserrat_400Regular,
-        "MontserratBold": Montserrat_700Bold,
+export default function Cesta({header, detalhes, itens}){
+    const [fontLoaded] = useFonts({
+       'MontserratRegular': Montserrat_400Regular,
+       'MontserratBold': Montserrat_700Bold,
     });
 
+    if(!fontLoaded){
+        return null
+    }
 
-    if (!fontsLoaded){
-        return <View/>;
-    }else{
     return (
-        <>
-        <Header/>
+        <ScrollView>
+        <Header {...header}/>
         <View style={styles.container}>
-            <Detalhes/>
+            <Detalhes {...detalhes}/>
+            <Itens {...itens}/>
         </View>
-        </>
+        </ScrollView>
+
     )
-}}
+}
 
 const styles = StyleSheet.create({
     container:{

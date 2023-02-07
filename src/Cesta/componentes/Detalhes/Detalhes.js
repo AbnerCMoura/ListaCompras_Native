@@ -1,31 +1,36 @@
 import React from "react";
-import {Image, StatusBar, StyleSheet, View} from 'react-native'
-import img_fazenda from '../../../../assets/logo.png';
+import {Image, StyleSheet, View, TouchableOpacity, Alert} from 'react-native'
 import Texto from '../../../componentes/Texto';
 
-export default function Detalhes() {
+
+export default function Detalhes({titulo, logoFazenda, nomeFazenda, descricao, preco, botao}) {
   return (
     <>
-      <Texto style={styles.nome}>Cesta de Verduras</Texto>
+      <Texto style={styles.titulo}>{titulo}</Texto>
 
       <View style={styles.logo_container}>
-        <Image source={img_fazenda} style={styles.logo_fazenda} />
-        <Texto style={styles.nomeFazenda}>Jenny Jack Farm</Texto>
+        <Image source={logoFazenda} style={styles.logo_fazenda} />
+        <Texto style={styles.tituloFazenda}>{nomeFazenda}</Texto>
       </View>
 
       <Texto style={styles.descricao}>
-        Uma cesta com produtos selecionados cuidadosamente da fazendo direto
-        para a sua cozinha.
+        {descricao}
       </Texto>
 
-      <Texto style={styles.preco}>R$40,00</Texto>
+      <Texto style={styles.preco}>{preco}</Texto>
+
+      <TouchableOpacity onPress={() => Alert.alert("👍")} style={styles.botao} >
+        <Texto style={styles.txtbotao}>{botao}</Texto>
+      </TouchableOpacity>
+
+
     </>
   );
 }
 
 const styles = StyleSheet.create({
     
-    nome:{
+    titulo:{
         fontSize: 26,
         lineHeight: 42,
         color: '#464646',
@@ -62,6 +67,21 @@ const styles = StyleSheet.create({
         lineHeight: 42,
         paddingTop: 8,
         fontWeight: 'bold',
+    },
+    botao:{
+        marginTop: 16,
+        backgroundColor: '#2a9f85',
+        paddingVertical: 16,
+        borderRadius: 8,
+    },
+    txtbotao:{
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 16,
+        lineHeight: 26,
+        fontWeight: 'bold',
+    },
+    Precionado:{
+        backgroundColor: '#000'
     }
-
 })

@@ -5,11 +5,11 @@ import Texto from '../../../componentes/Texto'
 
 const width = Dimensions.get('screen').width;
 
-export default function Header() {
+export default function Header( {h1} ) {
   return (
     <>
       <Image style={styles.topo} source={topo} />
-      <Texto style={styles.h1}> Carrinho de Compras </Texto>
+      <Texto style={styles.h1}> {h1} </Texto> 
     </>
   );
 }

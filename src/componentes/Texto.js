@@ -11,18 +11,17 @@ export default function Texto({ children, style }){
     }
 
     return (
-
         <Text style={[style, fonte]}>{children}</Text>
     )
 }
 
 const stylesFont = StyleSheet.create({
     Regular:{
-        fontFamily: "MontserratRegular",
+        fontFamily: 'MontserratRegular',
         fontWeight: 'normal',
     },
     TextoNegrito:{
-        fontFamily: "MontserratBold",
+        fontFamily: 'MontserratBold',
         fontWeight: 'normal',
     },
 })
