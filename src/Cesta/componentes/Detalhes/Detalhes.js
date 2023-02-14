@@ -5,9 +5,11 @@ import {
   View,
   TouchableOpacity,
   Modal,
+  
 } from "react-native";
 import Texto from "../../../componentes/Texto";
-import { ValueContext } from '../../../contexts/valuePicker' 
+import { ValueContext } from '../../../contexts/valuePicker';
+import ModalList from './components/modalList'
 
 export default function Detalhes({
   titulo,
@@ -19,13 +21,14 @@ export default function Detalhes({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { valorTot, cesta } = useContext(ValueContext)
+  const { valorTot, setValorTot, cesta } = useContext(ValueContext)
 
-  let testTot = 0
+  let testtot = 0
+  
   for(let i = 0; i < cesta.length; i++ ){
-    testTot = cesta[i].precototal + testTot;
+    testtot = cesta[i].precototal + testtot
+    setValorTot(testtot)
   }
-
 
   return (
     <>
@@ -36,29 +39,34 @@ export default function Detalhes({
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
-
       >
+
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TouchableOpacity style={styles.buttonClose } onPress={() => setModalVisible(false)}>
-              <Texto style={styles.modalText}>Fechar</Texto>
+            <View style={styles.modalHeader}>
+          <Texto style={styles.modalTitle}>Carrinho de compras</Texto>
+
+          <TouchableOpacity style={styles.buttonClose} onPress={() => setModalVisible(false)}>
+              <Texto style={styles.textClose}>X</Texto>
             </TouchableOpacity>
+            </View>
+
+            {/* Modal List */}
+
+            <ModalList />
+            
           </View>
         </View>
       </Modal>
 
 
       <Texto style={styles.titulo}>{titulo}</Texto>
-
       <View style={styles.logo_container}>
         <Image source={logoFazenda} style={styles.logo_fazenda} />
         <Texto style={styles.tituloFazenda}>{nomeFazenda}</Texto>
       </View>
-
       <Texto style={styles.descricao}>{descricao}</Texto>
-
-      <Texto style={styles.preco}>{`R$ ${testTot.toFixed(2)}`}</Texto>
-
+      <Texto style={styles.preco}>{`R$ ${testtot.toFixed(2)}`}</Texto>
       <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.botao} >
         <Texto style={styles.txtbotao}>{botao}</Texto>
       </TouchableOpacity>
@@ -72,6 +80,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  
+  modalHeader:{
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'space-between',
+  },
+  modalTitle:{
+    textAlign: 'center',
+    marginLeft: 20,
+    marginTop: 7,
+    height: 30,
+    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  buttonClose:{
+    elevation: 3,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    margin: 6,
+  },
+  textClose: {
+    color: '#000',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
   modalView: {
     margin: 20,
     backgroundColor: '#fff',
@@ -87,25 +123,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
 
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'flex-end',
-  },
-
-  buttonClose:{
-    backgroundColor: '#2a9f85',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 3,
-    width: 79,
-    marginHorizontal: '35%',
-
-  },
-
-  modalText: {
-    color: '#FFF',
-    fontWeight: 'bold',
-    textAlign: 'right',
   },
   titulo: {
     fontSize: 26,

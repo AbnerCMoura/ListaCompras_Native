@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import { StyleSheet, Image, View, TouchableOpacity, Alert } from "react-native";
 import Texto from "../../../componentes/Texto";
 import Button from "./buttons";
@@ -7,7 +7,7 @@ import {ValueContext} from '../../../contexts/valuePicker'
 
 export default function Item({id, nome, imagem, preco, qtd, precototal}) {  
 
-  const {valorTot} = useContext(ValueContext)
+  const {qtdi, setQtdi} = useContext(ValueContext)
 
   return (
     <View style={styles.item}>
@@ -19,10 +19,9 @@ export default function Item({id, nome, imagem, preco, qtd, precototal}) {
           </View>
           <View style={styles.precotot}>
           <Texto> {`R$ ${precototal.toFixed(2)}`} </Texto>
-          <Texto> </Texto>
         </View>
       </View>
-      <Button idItem={id} qtd={qtd} precoTotal={precototal} />
+      <Button idItem={id} qtd={qtd} setQtd={setQtdi} precoTotal={precototal} />
 
     </View>
   );

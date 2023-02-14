@@ -1,29 +1,29 @@
-import React, { useContext, useState } from "react";
-import { TouchableOpacity, View, StyleSheet, Alert } from "react-native";
+import React, { useContext } from "react";
+import { TouchableOpacity, View, StyleSheet, } from "react-native";
 import Texto from "../../../../componentes/Texto";
 import { ValueContext } from "../../../../contexts/valuePicker";
 
 export default function Button(props) {
-  const { valorTot, setValorTot, cesta, setCesta } = useContext(ValueContext);
+  const { cesta, setCesta, 
+  
+  } = useContext(ValueContext);
 
-  const [qtdi, setQtdi] = useState(props.qtd);
 
-  const [precototal, setPrecoTotal] = useState(0)
 
   const handlerAdd = (id) => {
-    let test = cesta.filter((item) => {
+    let filtro = cesta.filter((item) => {
       if (item.id == id) {
         item.qtd = item.qtd + 1;
         item.precototal = item.qtd * item.preco
       }
       return cesta;
+      
     });
 
-    setCesta(test);
-
-    setQtdi(test[id - 1].qtd);
-    
+    setCesta(filtro);
+    props.setQtd(filtro[id - 1].qtd);
   };
+  
 
   const handlerRm = (id) => {
     let filtro = cesta.filter((item) => {
@@ -36,7 +36,7 @@ export default function Button(props) {
     });
 
     setCesta(filtro);
-    setQtdi(filtro[id - 1].qtd);
+    props.setQtd(filtro[id - 1].qtd);
   };
 
   return (
@@ -44,7 +44,7 @@ export default function Button(props) {
       <TouchableOpacity onPress={() => handlerRm(props.idItem)}>
         <Texto style={styles.decreText}> - </Texto>
       </TouchableOpacity>
-      <Texto style={styles.txt}> {qtdi} </Texto>
+      <Texto style={styles.txt}> {props.qtd} </Texto>
       <TouchableOpacity onPress={() => handlerAdd(props.idItem)}>
         <Texto style={styles.increText}> + </Texto>
       </TouchableOpacity>
