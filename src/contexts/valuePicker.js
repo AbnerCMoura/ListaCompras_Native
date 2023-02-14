@@ -1,62 +1,63 @@
-import React, {createContext, useState} from "react";
-import tomate from '../../assets/frutas/Tomate.png';
-import brocolis from '../../assets/frutas/Brócolis.png';
-import batata from '../../assets/frutas/Batata.png';
-import pepino from '../../assets/frutas/Pepino.png';
-import abobora from '../../assets/frutas/Abóbora.png';
+import React, { createContext, useState } from "react";
+import tomate from "../../assets/frutas/Tomate.png";
+import brocolis from "../../assets/frutas/Brócolis.png";
+import batata from "../../assets/frutas/Batata.png";
+import pepino from "../../assets/frutas/Pepino.png";
+import abobora from "../../assets/frutas/Abóbora.png";
 
-export const ValueContext = createContext({})
+export const ValueContext = createContext({});
 
-function ValueProvider({children}){
+function ValueProvider({ children }) {
+  const [valorTot, setValorTot] = useState(0);
 
+  const [cesta, setCesta] = useState([
+    {
+      id: 1,
+      nome: "Tomate",
+      imagem: tomate,
+      preco: 3.49,
+      qtd: 0,
+      precototal: 0,
+    },
+    {
+      id: 2,
+      nome: "Brócolis",
+      imagem: brocolis,
+      preco: 4.99,
+      qtd: 0,
+      precototal: 0,
+    },
+    {
+      id: 3,
+      nome: "Batata",
+      imagem: batata,
+      preco: 3.99,
+      qtd: 0,
+      precototal: 0,
+    },
+    {
+      id: 4,
+      nome: "Pepino",
+      imagem: pepino,
+      preco: 4.19,
+      qtd: 0,
+      precototal: 0,
+    },
+    {
+      id: 5,
+      nome: "Abóbora",
+      imagem: abobora,
+      preco: 6.99,
+      qtd: 0,
+      precototal: 0,
+    },
+  ]);
 
-    const [valorTot, setValorTot] = useState(0);
-
-    const [cesta, setCesta] = useState({
-        lista: [
-                    {
-                        nome: "Tomate",
-                        imagem: tomate,
-                        preco: 'R$3,49 Kg',
-                        qtd: 0
-                    },
-                    {
-                        nome: "Brócolis",
-                        imagem: brocolis,
-                        preco: `R$4,99 Kg`,
-                        qtd: 0
-                    },
-                    {
-                        nome: "Batata",
-                        imagem: batata,
-                        preco: 'R$3,99 Kg',
-                        qtd: 0
-                    },
-                    {
-                        nome: "Pepino",
-                        imagem: pepino,
-                        preco: 'R$4,19 Kg',
-                        qtd: 0
-                    },
-                    {
-                        nome: "Abóbora",
-                        imagem: abobora,
-                        preco: 'R$6,99 Kg',
-                        qtd: 0
-                    }
-                ]
-            })
-
-    if(valorTot<0){
-        setValorTot(0)
-      }
-
-
-    return(
-        <ValueContext.Provider value={{valorTot, setValorTot, cesta, setCesta}}>
-            {children}
-        </ValueContext.Provider>
-    )
-} 
+  return (
+    <ValueContext.Provider value={{ valorTot, setValorTot, cesta, setCesta }}>
+      {children}
+    </ValueContext.Provider>
+  );
+}
 
 export default ValueProvider;

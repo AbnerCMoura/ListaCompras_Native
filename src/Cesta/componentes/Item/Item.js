@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Image, View, TouchableOpacity, Alert } from "react-native";
 import Texto from "../../../componentes/Texto";
 import Button from "./buttons";
+import {ValueContext} from '../../../contexts/valuePicker'
 
 
-export default function Item({item: { nome, imagem, preco }}) {  
+export default function Item({id, nome, imagem, preco, qtd, precototal}) {  
+
+  const {valorTot} = useContext(ValueContext)
 
   return (
     <View style={styles.item}>
@@ -12,10 +15,14 @@ export default function Item({item: { nome, imagem, preco }}) {
         <Image style={styles.image} source={imagem} />
         <View style={styles.detalhe} >
           <Texto style={styles.texto}>{nome}</Texto>
-          <Texto style={styles.preco}> {preco} </Texto>
+          <Texto style={styles.preco}> {`R$ ${preco} Kg`} </Texto>
+          </View>
+          <View style={styles.precotot}>
+          <Texto> {`R$ ${precototal.toFixed(2)}`} </Texto>
+          <Texto> </Texto>
         </View>
       </View>
-      <Button />
+      <Button idItem={id} qtd={qtd} precoTotal={precototal} />
 
     </View>
   );
@@ -37,7 +44,7 @@ const styles = StyleSheet.create({
   image: {
     width: 46,
     height: 46,
-    marginRight: 24,
+    marginRight: 15,
   },
   texto: {
     fontSize: 16,
@@ -50,6 +57,10 @@ const styles = StyleSheet.create({
   preco:{
     fontSize: 12,
     color: "#808080",
+  },
+  precotot:{
+    flexDirection: 'row',
+    marginLeft: 30,
   }
 
 });

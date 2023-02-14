@@ -19,8 +19,13 @@ export default function Detalhes({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const { valorTot, cesta } = useContext(ValueContext)
 
-  const { valorTot } = useContext(ValueContext)
+  let testTot = 0
+  for(let i = 0; i < cesta.length; i++ ){
+    testTot = cesta[i].precototal + testTot;
+  }
+
 
   return (
     <>
@@ -52,7 +57,7 @@ export default function Detalhes({
 
       <Texto style={styles.descricao}>{descricao}</Texto>
 
-      <Texto style={styles.preco}>{`R$ ${valorTot}`}</Texto>
+      <Texto style={styles.preco}>{`R$ ${testTot.toFixed(2)}`}</Texto>
 
       <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.botao} >
         <Texto style={styles.txtbotao}>{botao}</Texto>

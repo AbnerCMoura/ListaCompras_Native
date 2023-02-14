@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { FlatList, StyleSheet, View, Image } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
 import {
   useFonts,
   Montserrat_400Regular,
@@ -7,13 +7,12 @@ import {
 } from "@expo-google-fonts/montserrat";
 import Header from "../Cesta/componentes/Header";
 import Detalhes from "../Cesta/componentes/Detalhes";
-import Item  from "./componentes/Item";
+import Item from "./componentes/Item";
 import Texto from "../componentes/Texto";
-import { ValueContext } from '../contexts/valuePicker'
+import { ValueContext } from "../contexts/valuePicker";
 
 export default function Cesta({ header, detalhes, itens }) {
-
-  const { cesta } = useContext(ValueContext)
+  const { cesta } = useContext(ValueContext);
 
   const [fontLoaded] = useFonts({
     MontserratRegular: Montserrat_400Regular,
@@ -24,27 +23,26 @@ export default function Cesta({ header, detalhes, itens }) {
     return null;
   }
 
-
   return (
+    <ScrollView>
+      <Header {...header} />
+      <View style={styles.container}>
+        <Detalhes {...detalhes} />
+        <Texto style={styles.titulo}>{itens.titulo}</Texto>
+      </View>
 
-    <>
-      <FlatList
-        data={cesta.lista}
-        renderItem={Item}
-        keyExtractor={({ nome }) => nome}
-        ListHeaderComponent={() => {
-          return (
-            <>
-              <Header {...header} />
-              <View style={styles.container}>
-                <Detalhes {...detalhes} />
-                <Texto style={styles.titulo}>{itens.titulo}</Texto>
-              </View>
-            </>
-          );
-        }}
-      />
-    </>
+      {cesta.map((item) => (
+        <Item
+          id={item.id}
+          nome={item.nome}
+          imagem={item.imagem}
+          preco={item.preco}
+          qtd={item.qtd}
+          precototal={item.precototal}
+          key={item.id}
+        />
+      ))}
+    </ScrollView>
   );
 }
 

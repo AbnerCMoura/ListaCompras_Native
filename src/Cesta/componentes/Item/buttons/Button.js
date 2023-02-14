@@ -3,63 +3,49 @@ import { TouchableOpacity, View, StyleSheet, Alert } from "react-native";
 import Texto from "../../../../componentes/Texto";
 import { ValueContext } from "../../../../contexts/valuePicker";
 
-export default function Button() {
-  const { valorTot, setValorTot } = useContext(ValueContext);
+export default function Button(props) {
+  const { valorTot, setValorTot, cesta, setCesta } = useContext(ValueContext);
 
-  const [cesta, setCesta] = useState([
-    {
-      nome: "Tomate",
-      preco: "R$3,49 Kg",
-      qtd: 0,
-    },
-    {
-      nome: "Brócolis",
-      preco: `R$4,99 Kg`,
-      qtd: 0,
-    },
-    {
-      nome: "Batata",
-      preco: "R$3,99 Kg",
-      qtd: 0,
-    },
-    {
-      nome: "Pepino",
-      preco: "R$4,19 Kg",
-      qtd: 0,
-    },
-    {
-      nome: "Abóbora",
-      preco: "R$6,99 Kg",
-      qtd: 0,
-    },
-  ]);
+  const [qtdi, setQtdi] = useState(props.qtd);
 
-  const getProdByName = (list, name) => {
-    return list.filter(item => item.nome == name);
-  }
+  const [precototal, setPrecoTotal] = useState(0)
 
-  const handlerAdd = () => {
-    setCesta({ 
-        ...cesta, 
-        qtd: cesta.qtd + 1 
+  const handlerAdd = (id) => {
+    let test = cesta.filter((item) => {
+      if (item.id == id) {
+        item.qtd = item.qtd + 1;
+        item.precototal = item.qtd * item.preco
+      }
+      return cesta;
     });
+
+    setCesta(test);
+
+    setQtdi(test[id - 1].qtd);
+    
   };
 
+  const handlerRm = (id) => {
+    let filtro = cesta.filter((item) => {
+      if (item.id == id && item.qtd > 0) {
+        item.qtd = item.qtd - 1;
+        item.precototal -= item.preco
 
-  const handlerRm = () => {
-    setCesta({
-      ...cesta,
-      qtd: cesta.qtd - 1,
+      }
+      return cesta;
     });
+
+    setCesta(filtro);
+    setQtdi(filtro[id - 1].qtd);
   };
 
   return (
     <View style={styles.contador}>
-      <TouchableOpacity onPress={() => handlerRm()}>
+      <TouchableOpacity onPress={() => handlerRm(props.idItem)}>
         <Texto style={styles.decreText}> - </Texto>
       </TouchableOpacity>
-      <Texto style={styles.txt}> {cesta.qtd} </Texto>
-      <TouchableOpacity onPress={() => handlerAdd()}>
+      <Texto style={styles.txt}> {qtdi} </Texto>
+      <TouchableOpacity onPress={() => handlerAdd(props.idItem)}>
         <Texto style={styles.increText}> + </Texto>
       </TouchableOpacity>
     </View>
@@ -84,7 +70,6 @@ const styles = StyleSheet.create({
   },
   contador: {
     flexDirection: "row",
-    marginHorizontal: 16,
-    paddingLeft: 20,
+
   },
 });
