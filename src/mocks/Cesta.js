@@ -5,11 +5,9 @@ const cesta = {
     titulo: "Detalhe da cesta",
   },
   detalhes: {
-    titulo: "Cesta de Verduras",
-    logoFazenda: img_fazenda,
-    nomeFazenda: "Jenny Jack Farm",
+    titulo: "Lista de Compras",
     descricao: "Uma cesta com produtos selecionados cuidadosamente da fazenda direto para sua cozinha",
-    botao: "Comprar",
+    botao: "Adicionar produto",
   },
   itens: {
     titulo: "Itens da cesta",

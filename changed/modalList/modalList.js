@@ -51,7 +51,17 @@ const styles = StyleSheet.create({
     height: 25,
     borderRadius: 15,
     marginHorizontal: 90,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
+  
   textConfirm:{
     color: '#fff',
     textAlign:'center',

@@ -8,8 +8,6 @@ export default function ModalButton(props) {
 
     const { cesta, setCesta, setValorTot, valorTot} = useContext(ValueContext);
 
-    const [qtdEle, setQtdEle] = useState(0)
-
     const deleteI = (id) => {
         let filtro = cesta.filter((item)=> {
             if(item.id == id){
@@ -27,12 +25,15 @@ export default function ModalButton(props) {
 
     return(
         <TouchableOpacity onPress={() => {deleteI(props.idItem)}}>
-            <Texto>X</Texto>
+            <Texto style={styles.btn}>X</Texto>
         </TouchableOpacity>
      
     )
 }
 
 const styles = StyleSheet.create({
-
+    btn:{
+        padding: 15,
+        color: 'red',
+    }
 })

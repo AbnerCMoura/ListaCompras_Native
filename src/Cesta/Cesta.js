@@ -33,13 +33,12 @@ export default function Cesta({ header, detalhes, itens }) {
 
       {cesta.map((item) => (
         <Item
-          id={item.id}
           nome={item.nome}
           imagem={item.imagem}
           preco={item.preco}
           qtd={item.qtd}
           precototal={item.precototal}
-          key={item.id}
+          key={item.nome}
         />
       ))}
     </ScrollView>

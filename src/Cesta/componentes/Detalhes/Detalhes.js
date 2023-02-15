@@ -9,25 +9,20 @@ import {
 } from "react-native";
 import Texto from "../../../componentes/Texto";
 import { ValueContext } from '../../../contexts/valuePicker';
-import ModalList from './components/modalList'
+import ModalForm from './components'
 
 export default function Detalhes({
   titulo,
-  logoFazenda,
-  nomeFazenda,
   descricao,
-  preco,
   botao,
 }) {
-  const [modalVisible, setModalVisible] = useState(false);
 
-  const { valorTot, setValorTot, cesta } = useContext(ValueContext)
+  const {cesta, setModalVisible, modalVisible} = useContext(ValueContext)
 
   let testtot = 0
   
   for(let i = 0; i < cesta.length; i++ ){
     testtot = cesta[i].precototal + testtot
-    setValorTot(testtot)
   }
 
   return (
@@ -53,7 +48,7 @@ export default function Detalhes({
 
             {/* Modal List */}
 
-            <ModalList />
+            <ModalForm/>
             
           </View>
         </View>
@@ -61,15 +56,12 @@ export default function Detalhes({
 
 
       <Texto style={styles.titulo}>{titulo}</Texto>
-      <View style={styles.logo_container}>
-        <Image source={logoFazenda} style={styles.logo_fazenda} />
-        <Texto style={styles.tituloFazenda}>{nomeFazenda}</Texto>
-      </View>
       <Texto style={styles.descricao}>{descricao}</Texto>
-      <Texto style={styles.preco}>{`R$ ${testtot.toFixed(2)}`}</Texto>
       <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.botao} >
         <Texto style={styles.txtbotao}>{botao}</Texto>
       </TouchableOpacity>
+      <Texto style={styles.preco}>{`R$ ${testtot.toFixed(2)}`}</Texto>
+
     </>
   );
 }
@@ -154,6 +146,7 @@ const styles = StyleSheet.create({
   },
 
   preco: {
+    marginHorizontal: '30%',
     color: "#2a9f85",
     fontSize: 26,
     lineHeight: 42,

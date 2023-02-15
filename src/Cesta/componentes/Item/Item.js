@@ -5,14 +5,13 @@ import Button from "./buttons";
 import {ValueContext} from '../../../contexts/valuePicker'
 
 
-export default function Item({id, nome, imagem, preco, qtd, precototal}) {  
+export default function Item({ nome, preco, qtd, precototal}) {  
 
   const {qtdi, setQtdi} = useContext(ValueContext)
 
   return (
     <View style={styles.item}>
       <View style={styles.lista} key={nome}>
-        <Image style={styles.image} source={imagem} />
         <View style={styles.detalhe} >
           <Texto style={styles.texto}>{nome}</Texto>
           <Texto style={styles.preco}> {`R$ ${preco} Kg`} </Texto>
@@ -21,7 +20,7 @@ export default function Item({id, nome, imagem, preco, qtd, precototal}) {
           <Texto> {`R$ ${precototal.toFixed(2)}`} </Texto>
         </View>
       </View>
-      <Button idItem={id} qtd={qtd} setQtd={setQtdi} precoTotal={precototal} />
+      <Button id={nome} qtd={qtd} setQtd={setQtdi} precoTotal={precototal} />
 
     </View>
   );

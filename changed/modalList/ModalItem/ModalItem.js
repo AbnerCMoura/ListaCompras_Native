@@ -18,10 +18,9 @@ export default function ModalItem({id, nome, imagem, preco, qtd, precototal}){
           <Image style={styles.image} source={imagem} />
           <View style={styles.detalhe} >
             <Texto style={styles.texto}>{nome}</Texto>
-            <Texto style={styles.preco}> {`R$ ${preco} Kg`} </Texto>
             </View>
             <View style={styles.precotot}>
-            <Texto> {`R$ ${precototal.toFixed(2)}`} </Texto>
+            <Texto style={styles.precoItem}> {`R$ ${precototal.toFixed(2)}`} </Texto>
           </View>   
 
             <ModalButton idItem={id} qtd={qtd}/>
@@ -57,12 +56,12 @@ const styles = StyleSheet.create({
       detalhe:{
         flexDirection: 'column',
       },
-      preco:{
-        fontSize: 12,
-        color: "#808080",
-      },
       precotot:{
         flexDirection: 'row',
-        marginLeft: 30,
+        marginLeft: 25,
+       
+      },
+      precoItem:{
+        fontWeight: 'bold', 
       }
 })

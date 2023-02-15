@@ -4,48 +4,45 @@ import Texto from "../../../../componentes/Texto";
 import { ValueContext } from "../../../../contexts/valuePicker";
 
 export default function Button(props) {
-  const { cesta, setCesta, 
-  
-  } = useContext(ValueContext);
+  const { cesta, setCesta} = useContext(ValueContext);
 
 
-
-  const handlerAdd = (id) => {
+  const handlerAdd = (nome) => {
     let filtro = cesta.filter((item) => {
-      if (item.id == id) {
+      if (item.nome == nome) {
         item.qtd = item.qtd + 1;
         item.precototal = item.qtd * item.preco
+        
+        props.setQtd(item.qtd+1)
       }
       return cesta;
       
     });
 
     setCesta(filtro);
-    props.setQtd(filtro[id - 1].qtd);
   };
   
 
-  const handlerRm = (id) => {
+  const handlerRm = (nome) => {
     let filtro = cesta.filter((item) => {
-      if (item.id == id && item.qtd > 0) {
+      if (item.nome == nome && item.qtd > 0) {
         item.qtd = item.qtd - 1;
         item.precototal -= item.preco
-
+        
       }
       return cesta;
     });
 
     setCesta(filtro);
-    props.setQtd(filtro[id - 1].qtd);
   };
 
   return (
     <View style={styles.contador}>
-      <TouchableOpacity onPress={() => handlerRm(props.idItem)}>
+      <TouchableOpacity onPress={() => handlerRm(props.id)}>
         <Texto style={styles.decreText}> - </Texto>
       </TouchableOpacity>
       <Texto style={styles.txt}> {props.qtd} </Texto>
-      <TouchableOpacity onPress={() => handlerAdd(props.idItem)}>
+      <TouchableOpacity onPress={() => handlerAdd(props.id)}>
         <Texto style={styles.increText}> + </Texto>
       </TouchableOpacity>
     </View>
