@@ -7,25 +7,24 @@ export default function Button(props) {
   const { cesta, setCesta} = useContext(ValueContext);
 
 
-  const handlerAdd = (nome) => {
+  const handlerAdd = (id) => {
     let filtro = cesta.filter((item) => {
-      if (item.nome == nome) {
+      if (item.id == id) {
         item.qtd = item.qtd + 1;
         item.precototal = item.qtd * item.preco
-        
         props.setQtd(item.qtd+1)
       }
       return cesta;
       
     });
-
+    
     setCesta(filtro);
   };
   
 
-  const handlerRm = (nome) => {
+  const handlerRm = (id) => {
     let filtro = cesta.filter((item) => {
-      if (item.nome == nome && item.qtd > 0) {
+      if (item.id == id && item.qtd > 0) {
         item.qtd = item.qtd - 1;
         item.precototal -= item.preco
         

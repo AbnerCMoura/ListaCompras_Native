@@ -1,14 +1,30 @@
-import React, { useContext,useState } from "react";
-import { StyleSheet, Image, View, TouchableOpacity, Alert } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Texto from "../../../componentes/Texto";
 import Button from "./buttons";
 import {ValueContext} from '../../../contexts/valuePicker'
+import  { useAsyncStorage }  from '@react-native-async-storage/async-storage';
+import lixeira from '../../../../assets/lixo.png'
 
 
-export default function Item({ nome, preco, qtd, precototal}) {  
+export default function Item({ id ,nome, preco, qtd, precototal}) {  
 
-  const {qtdi, setQtdi} = useContext(ValueContext)
+  const {qtdi, setQtdi, setCesta} = useContext(ValueContext)
 
+  const {getItem, setItem} = useAsyncStorage("@orgs-cesta:ListaCompras")
+
+  const handleRemove = async (id) =>{
+    const response = await getItem()
+    const previousdata = response ? JSON.parse(response) : [];
+    
+    const data = previousdata.filter((item) => item.id !== id);
+
+    setItem(JSON.stringify(data));
+    setCesta(data)
+
+    console.log(data)
+  }
+  
   return (
     <View style={styles.item}>
       <View style={styles.lista} key={nome}>
@@ -19,8 +35,14 @@ export default function Item({ nome, preco, qtd, precototal}) {
           <View style={styles.precotot}>
           <Texto> {`R$ ${precototal.toFixed(2)}`} </Texto>
         </View>
+
+      <TouchableOpacity style={styles.remove} onPress={() => handleRemove(id)}>
+        <Texto style={styles.texto}>{lixeira}</Texto>
+      </TouchableOpacity>
+
       </View>
-      <Button id={nome} qtd={qtd} setQtd={setQtdi} precoTotal={precototal} />
+      <Button id={id} qtd={qtd} setQtd={setQtdi} precoTotal={precototal} />
+
 
     </View>
   );
@@ -59,6 +81,9 @@ const styles = StyleSheet.create({
   precotot:{
     flexDirection: 'row',
     marginLeft: 30,
+  },
+  remove:{
+    text:'white'
   }
 
 });

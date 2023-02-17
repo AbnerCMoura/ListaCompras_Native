@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import React, { useContext,useEffect } from "react";
+import { StyleSheet, View, ScrollView } from 'react-native'
 import {
   useFonts,
   Montserrat_400Regular,
@@ -10,10 +10,24 @@ import Detalhes from "../Cesta/componentes/Detalhes";
 import Item from "./componentes/Item";
 import Texto from "../componentes/Texto";
 import { ValueContext } from "../contexts/valuePicker";
+import  { useAsyncStorage }  from '@react-native-async-storage/async-storage'
+
 
 export default function Cesta({ header, detalhes, itens }) {
-  const { cesta } = useContext(ValueContext);
+  const { getItem } = useAsyncStorage("@orgs-cesta:ListaCompras")
+  const {setCesta , cesta} = useContext(ValueContext)
 
+  const carregarLista = async() => {
+    const response = await getItem();
+    const data = response ? JSON.parse(response) : [];
+    setCesta(data)
+  }
+
+  useEffect(() => {
+    carregarLista();
+  },[])
+
+  
   const [fontLoaded] = useFonts({
     MontserratRegular: Montserrat_400Regular,
     MontserratBold: Montserrat_700Bold,
@@ -31,16 +45,18 @@ export default function Cesta({ header, detalhes, itens }) {
         <Texto style={styles.titulo}>{itens.titulo}</Texto>
       </View>
 
-      {cesta.map((item) => (
-        <Item
-          nome={item.nome}
-          imagem={item.imagem}
-          preco={item.preco}
-          qtd={item.qtd}
-          precototal={item.precototal}
-          key={item.nome}
-        />
-      ))}
+
+      
+      {cesta.map(item => 
+      <Item
+        id={item.id}
+        nome={item.nome}
+        preco={item.preco}
+        precototal={item.precototal}
+        qtd={item.qtd}
+        key={item.id}
+      />
+    )} 
     </ScrollView>
   );
 }

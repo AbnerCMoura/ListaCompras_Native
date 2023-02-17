@@ -5,7 +5,6 @@ import mock from "./src/mocks/Cesta";
 import ValueProvider from "./src/contexts/valuePicker";
 
 export default function App() {
-  const [valorTot, setValorTot] = useState(0);
 
   return (
     

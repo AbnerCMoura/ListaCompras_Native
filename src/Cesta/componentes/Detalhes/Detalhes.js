@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import {
-  Image,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
   },
 
   preco: {
-    marginHorizontal: '30%',
+    marginHorizontal: '27%',
     color: "#2a9f85",
     fontSize: 26,
     lineHeight: 42,

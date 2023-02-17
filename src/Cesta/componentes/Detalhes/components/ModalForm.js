@@ -1,58 +1,75 @@
-import React, { useContext, useEffect } from "react";
-import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { StyleSheet, TextInput, View, TouchableOpacity, ToastAndroid, Alert } from "react-native";
 import { ValueContext } from "../../../../contexts/valuePicker";
 import Texto from '../../../../componentes/Texto'
-import {useForm} from 'react-hook-form'
+import uuid from 'react-native-uuid';
+import  { useAsyncStorage }  from '@react-native-async-storage/async-storage'
 
 
 export default function ModalForm() {
-  const { cesta, setCesta, setModalVisible } = useContext(ValueContext);
-  const {register, setValue, handleSubmit} = useForm()
+  const {getItem, setItem} = useAsyncStorage("@orgs-cesta:ListaCompras")
 
-  useEffect(() => {
-    register('produto')
-    register('preco')
-  }, [register])
+  const {setModalVisible, setCesta } = useContext(ValueContext);
+  const [produtoNovo, setProdutoNovo] = useState()
+  const [precoNovo, setPrecoNovo] = useState()
 
-  const onSubmit = (data) => {
+  const onSubmit = async () => {
+    try{
+    const id = uuid.v4();
 
-    setCesta(
-      [...cesta,
+    const newPreco = precoNovo.replace(/,/i, '.')
+    const newData = 
       {
-      
-      nome: data.produto,
-      preco: data.preco,
-      precototal: 0,
-      qtd: 0,
-    }]
-    )
+        id: id,
+        nome: produtoNovo,
+        preco: newPreco,
+        precototal: 0,
+        qtd: 0
+      }
     
+
+    const response = await getItem();
+    const previousData = response ? JSON.parse(response) : [];
+
+    const data = [...previousData,  newData];
+
+    await setItem(JSON.stringify(data))
+
+    setCesta(data)
+
+    ToastAndroid.show('Adicionado!', ToastAndroid.SHORT, ToastAndroid.TOP)
+
     setModalVisible(false)
-  }
   
+  }catch(error){
+    console.log(error)
+    Alert.alert('Digite o nome  e preço do produto')
+  }
+}
   return (
     <>
     <Texto style={styles.titulo}>Digite as informações do produto:</Texto>
     <View style={styles.container}>
       <Texto style={styles.inputTitle}>Digite o nome do produto: </Texto>
       <TextInput
+        autoCapitalize="none"
+        value={produtoNovo}
         style={styles.input}
-        label={'Produto'}
         placeholder={'Digite nome do produto'}
-        onChangeText={text => setValue('produto', text)}
+        onChangeText={setProdutoNovo}
       />
       
       <Texto style={styles.inputTitle}>Digite o nome do produto: </Texto>
       <TextInput
-      inputMode="numeric"
-      keyboardType="number-pad"
-      style={styles.input}
-        label={'Preco'}
+        autoCapitalize="none"
+        keyboardType="numeric"
+        value={precoNovo}
+        style={styles.input}
         placeholder={'Digite preço do produto'}
-        onChangeText={text => setValue('preco', text)}
+        onChangeText={setPrecoNovo}
       />  
     
-    <TouchableOpacity style={styles.btn} onPress={handleSubmit(onSubmit)}>
+    <TouchableOpacity style={styles.btn} onPress={onSubmit}>
         <Texto style={styles.btnText}>Adicionar ao carrinho</Texto>
       </TouchableOpacity>
 
