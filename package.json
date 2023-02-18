@@ -8,6 +8,12 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    }
+  },
   "dependencies": {
     "@expo-google-fonts/montserrat": "^0.2.2",
     "@expo/webpack-config": "^0.17.2",
@@ -25,10 +31,11 @@
     "react-native-modalize": "^2.1.1",
     "react-native-navigation": "^7.32.1",
     "react-native-root-toast": "^3.3.1",
-    "react-native-uuid": "^2.0.1"
+    "react-native-uuid": "^2.0.1",
+    "react-native-vector-icons": "^9.2.0",
+    "expo-dev-client": "~2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"
-  },
-  "private": true
+  }
 }

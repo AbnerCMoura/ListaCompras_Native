@@ -4,7 +4,7 @@ import Texto from "../../../componentes/Texto";
 import Button from "./buttons";
 import {ValueContext} from '../../../contexts/valuePicker'
 import  { useAsyncStorage }  from '@react-native-async-storage/async-storage';
-import lixeira from '../../../../assets/lixo.png'
+import Icon from 'react-native-vector-icons/AntDesign'
 
 
 export default function Item({ id ,nome, preco, qtd, precototal}) {  
@@ -21,8 +21,7 @@ export default function Item({ id ,nome, preco, qtd, precototal}) {
 
     setItem(JSON.stringify(data));
     setCesta(data)
-
-    console.log(data)
+    
   }
   
   return (
@@ -37,9 +36,8 @@ export default function Item({ id ,nome, preco, qtd, precototal}) {
         </View>
 
       <TouchableOpacity style={styles.remove} onPress={() => handleRemove(id)}>
-        <Texto style={styles.texto}>{lixeira}</Texto>
+        <Texto><Icon name="delete" color="#Ff0005" /></Texto>
       </TouchableOpacity>
-
       </View>
       <Button id={id} qtd={qtd} setQtd={setQtdi} precoTotal={precototal} />
 
@@ -83,7 +81,10 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   remove:{
-    text:'white'
+    text:'white',
+    marginLeft: 30,
+    paddingHorizontal: 10,
+    marginVertical: 5,
   }
 
 });

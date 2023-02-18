@@ -10,9 +10,8 @@ export default function Button(props) {
   const handlerAdd = (id) => {
     let filtro = cesta.filter((item) => {
       if (item.id == id) {
-        item.qtd = item.qtd + 1;
+        item.qtd = parseInt(item.qtd) + 1;
         item.precototal = item.qtd * item.preco
-        props.setQtd(item.qtd+1)
       }
       return cesta;
       

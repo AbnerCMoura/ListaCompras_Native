@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
 
   preco: {
-    marginHorizontal: '27%',
+    marginHorizontal: '25%',
     color: "#2a9f85",
     fontSize: 26,
     lineHeight: 42,
